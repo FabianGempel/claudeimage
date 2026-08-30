@@ -1,0 +1,127 @@
+// ═══════════════════════════════════════════════════════════
+// clevia Stoff-Agent — bewertet UNBEKANNTE Stoffe per KI
+// ───────────────────────────────────────────────────────────
+// Das Problem, das ohne KI unlösbar war: clevias kuratierte DB kennt
+// ~582 Stoffe. Aber es gibt Millionen, ständig neue. Bisher: unbekannter
+// Stoff → "unknown" oder grobe Muster-Heuristik.
+//
+// Mit KI: Ein Agent, der clevias Low-Tox-PHILOSOPHIE versteht und auf
+// jeden neuen Stoff anwendet — nicht EU-Konsens, sondern die scharfe,
+// behördenkritische Linie. Das war ohne Sprachmodell unmöglich: man kann
+// nicht für Millionen Stoffe Regeln schreiben. Ein Modell, das die HALTUNG
+// verinnerlicht, bewertet auch Stoffe, die es nie gesehen hat.
+//
+// Strategisch: Der Wert liegt im System-Prompt (clevias Philosophie),
+// nicht im Modell. Schwer kopierbar. Und jede Bewertung kann in die DB
+// zurückfließen → die KI füllt den Datengraben, während Nutzer scannen.
+//
+// Läuft auf DEINER Cloudflare-Infrastruktur (gratis, kein Cold-Start),
+// gleiches Muster wie die coach-Function. Antwort ist striktes JSON,
+// damit die App sie direkt wie einen DB-Eintrag verarbeiten kann.
+// ═══════════════════════════════════════════════════════════
+
+import { serve } from "https://deno.land/std@0.208.0/http/server.ts";
+
+const CF_ACCOUNT_ID = Deno.env.get("CF_ACCOUNT_ID") || "";
+const CF_API_TOKEN = Deno.env.get("CF_API_TOKEN") || "";
+const CF_MODELL = Deno.env.get("CF_MODELL") || "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
+const CF_RUN = `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/ai/run/${CF_MODELL}`;
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+};
+
+// ═══ DER KERN: clevias Bewertungs-Philosophie als System-Prompt ═══
+// Das ist die eigentliche Ingenieursleistung. Die KI wird zu clevia,
+// nicht zu einem neutralen EU-Bewerter.
+const SYSTEM_PROMPT = `Du bist der Bewertungs-Experte von clevia, einem Low-Tox-Produktscanner für die DACH-Region. Du bewertest Inhaltsstoffe nach einer strikten, gesundheitsbewussten Low-Tox-Philosophie — NICHT nach EU-Konsens.
+
+DEINE BEWERTUNGSLOGIK (drei Stufen):
+- GRÜN (grün): Natürlich, sicher, unbedenklich. Pflanzliche Öle, Extrakte, mineralische Stoffe, bewährte natürliche Zutaten. Auch natürliche Süße (Honig, Dattelsüße) ist grün.
+- ROT (rot): Vermeiden nach strikter Low-Tox-Linie — AUCH wenn die EU es erlaubt. Synthetische Tenside (Sulfate, PEG), Silikone, synthetische Konservierer (Parabene, Formaldehydabspalter), künstliche Farb-/Süßstoffe, Mineralöl-Derivate, Mikroplastik, hormonell wirksame Stoffe, umstrittene Zusatzstoffe.
+- GELB (gelb): NUR echte Dosis- oder Herkunfts-Grenzfälle mit klarer Begründung. Nicht als Ausweichkategorie nutzen. Ein Stoff ist gelb nur, wenn es einen konkreten, benennbaren Grund gibt (z.B. "nur in hoher Konzentration reizend" oder "je nach Gewinnung unterschiedlich rein").
+
+WICHTIGE PRINZIPIEN:
+- "Es kommt darauf an" ist KEINE akzeptable Bewertung. Das ist EU-Konsens-Denken, das clevia ablehnt.
+- Gift bleibt Gift — keine Gruppen-Ausnahmen.
+- Die EU-Zulassung ist NICHT der Maßstab. Maßstab ist, was die gesundheitsbewusste, behördenkritische Low-Tox-Community als bedenklich einstuft.
+- Bei Kritik: formuliere im Konjunktiv und belegbar ("steht in der Kritik, weil...", "wird in Verbindung gebracht mit..."), nie als absolute Tatsachenbehauptung.
+- Synthetische Stoffe im Zweifel eher ROT, natürliche im Zweifel eher GRÜN.
+
+Du bekommst einen Inhaltsstoff und gibst AUSSCHLIESSLICH ein JSON-Objekt zurück, exakt in diesem Format, ohne weiteren Text, ohne Markdown:
+{"d":"deutscher Name","i":"INCI/Fachname falls bekannt sonst null","a":"grün|gelb|rot","k":"Kategorie (z.B. Tensid, Pflanzenöl, Konservierer)","g":"kurze Begründung (max 15 Wörter), im Konjunktiv wenn kritisch"}`;
+
+serve(async (req) => {
+  if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
+
+  try {
+    const { stoff } = await req.json();
+    if (!stoff || typeof stoff !== "string" || stoff.length < 2) {
+      return new Response(JSON.stringify({ error: "kein Stoff" }), {
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (!CF_ACCOUNT_ID || !CF_API_TOKEN) throw new Error("Cloudflare nicht konfiguriert");
+
+    // KI-Aufruf: bewerte den Stoff nach clevias Philosophie
+    const resp = await fetch(CF_RUN, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${CF_API_TOKEN}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          { role: "user", content: `Bewerte diesen Inhaltsstoff nach clevias Low-Tox-Logik: "${stoff}"` },
+        ],
+        temperature: 0.2,   // niedrig = konsistent, weniger "kreativ"
+        max_tokens: 200,
+      }),
+    });
+    if (!resp.ok) throw new Error(`Cloudflare ${resp.status}`);
+    const data = await resp.json();
+    // Cloudflare-Format: {result:{response:"..."}}
+    const roh = data?.result?.response || "";
+
+    // JSON aus der Antwort extrahieren (Modell kann Text drumherum schreiben)
+    const bewertung = extrahiereJSON(roh);
+    if (!bewertung || !bewertung.a) {
+      // Konnte nicht sauber bewerten → ehrliches Signal, App nutzt Muster-Fallback
+      return new Response(JSON.stringify({ erkannt: false }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    // Ampel normalisieren (Modell könnte "gruen"/"green" schreiben)
+    bewertung.a = normAmpel(bewertung.a);
+
+    return new Response(JSON.stringify({ erkannt: true, bewertung, quelle: "ki" }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  } catch (e) {
+    return new Response(JSON.stringify({ erkannt: false, error: String(e) }), {
+      status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+});
+
+// Extrahiert das erste JSON-Objekt aus einem Text (robust gegen Drumherum).
+function extrahiereJSON(text: string): any {
+  if (!text) return null;
+  // Direkter Versuch
+  try { return JSON.parse(text.trim()); } catch (_) {}
+  // Objekt-Klammern suchen
+  const start = text.indexOf("{");
+  const ende = text.lastIndexOf("}");
+  if (start >= 0 && ende > start) {
+    try { return JSON.parse(text.slice(start, ende + 1)); } catch (_) {}
+  }
+  return null;
+}
+
+// Vereinheitlicht Ampel-Schreibweisen auf grün|gelb|rot.
+function normAmpel(a: string): string {
+  const s = String(a).toLowerCase().trim();
+  if (/rot|red|avoid/.test(s)) return "rot";
+  if (/gelb|yellow|caution/.test(s)) return "gelb";
+  if (/gr[üu]e?n|green|clean/.test(s)) return "grün";
+  return "gelb"; // im Zweifel Vorsicht
+}

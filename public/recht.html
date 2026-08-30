@@ -1,0 +1,221 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rechtliches — Clevia</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0C; --bg-2:#141418; --bg-3:#1B1B20;
+  --ink:#FAFAFA; --ink-2:#A1A1AA; --ink-3:#71717A; --ink-4:#52525B;
+  --line:#26262C; --line-2:#33333A;
+  --accent:#8FD9C0; --accent-2:#5FB89E; --accent-glow:rgba(143,217,192,.14);
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Instrument Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.nav{position:sticky;top:0;z-index:100;background:rgba(10,10,12,.72);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:760px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:11px;font-family:'Instrument Serif',serif;font-size:24px;letter-spacing:.3px;color:var(--ink)}
+.logo-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:#08110D}
+.logo-mark svg{width:20px;height:20px}
+.nav-back{font-size:14px;color:var(--ink-2)}
+
+.hero{padding:56px 0 24px;text-align:center}
+.hero h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(34px,6vw,52px);letter-spacing:-.5px}
+.hero p{color:var(--ink-3);font-size:15px;margin-top:10px}
+
+.tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:30px 0 50px;position:sticky;top:63px;z-index:50;background:var(--bg);padding:12px 0}
+.tab{padding:9px 20px;border-radius:100px;background:var(--bg-2);border:1px solid var(--line-2);color:var(--ink-2);font-size:14px;font-weight:500;cursor:pointer;transition:all .2s var(--ease)}
+.tab.active{background:var(--accent);color:#08110D;border-color:var(--accent);font-weight:600}
+
+section.doc{display:none;padding-bottom:80px}
+section.doc.active{display:block;animation:fade .4s var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.doc h2{font-family:'Instrument Serif',serif;font-weight:400;font-size:28px;margin:0 0 8px;letter-spacing:-.3px}
+.doc .updated{font-size:13px;color:var(--ink-4);margin-bottom:32px}
+.doc h3{font-size:17px;font-weight:600;margin:34px 0 10px;color:var(--ink)}
+.doc h3:first-of-type{margin-top:0}
+.doc p{color:var(--ink-2);font-size:15px;margin-bottom:14px}
+.doc ul{color:var(--ink-2);font-size:15px;margin:0 0 14px;padding-left:22px}
+.doc li{margin-bottom:7px}
+.doc strong{color:var(--ink);font-weight:600}
+.doc .box{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:20px 0}
+.doc .box p:last-child{margin-bottom:0}
+.doc .muted{font-size:13px;color:var(--ink-4);font-style:italic}
+
+.footer{border-top:1px solid var(--line);padding:36px 0;text-align:center}
+.footer p{font-size:13px;color:var(--ink-4)}
+.footer a{color:var(--ink-3)}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="nav-inner">
+  <a href="/" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>Clevia</a>
+  <a href="/" class="nav-back">← Zurück</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <h1>Rechtliches</h1>
+  <p>Impressum · Datenschutz · Nutzungsbedingungen</p>
+</div></header>
+
+<div class="wrap">
+  <div class="tabs">
+    <div class="tab active" data-tab="impressum">Impressum</div>
+    <div class="tab" data-tab="datenschutz">Datenschutz</div>
+    <div class="tab" data-tab="agb">Nutzungsbedingungen</div>
+  </div>
+
+  <!-- ═══ IMPRESSUM ═══ -->
+  <section class="doc active" id="impressum">
+    <h2>Impressum</h2>
+    <div class="updated">Angaben gemäß Schweizer Recht und Art. 5 ECG / § 5 DDG</div>
+
+    <h3>Anbieter</h3>
+    <div class="box">
+      <p><strong>sooth+</strong><br>
+      Inhaber: Fabian Gempel<br>
+      Autschachenpark 4<br>
+      8752 Näfels<br>
+      Schweiz</p>
+    </div>
+
+    <h3>Kontakt</h3>
+    <p>E-Mail: <a href="mailto:support@sooth.de">support@sooth.de</a></p>
+
+    <h3>Verantwortlich für den Inhalt</h3>
+    <p>Fabian Gempel, Anschrift wie oben.</p>
+
+    <h3>Haftung für Inhalte</h3>
+    <p>Die Inhalte der App und dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Die App liefert Einschätzungen zu Inhaltsstoffen auf Basis öffentlich verfügbarer und eigener Bewertungslogik und ersetzt <strong>keine</strong> ärztliche, ernährungswissenschaftliche oder toxikologische Beratung.</p>
+
+    <h3>Haftung für Links</h3>
+    <p>Unsere Angebote enthalten teilweise Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für diese fremden Inhalte übernehmen wir keine Gewähr. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.</p>
+
+    <h3>Urheberrecht</h3>
+    <p>Die durch den Betreiber erstellten Inhalte und Werke auf dieser Website und in der App unterliegen dem Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet.</p>
+
+    <h3>EU-Streitschlichtung</h3>
+    <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>. Wir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+  </section>
+
+  <!-- ═══ DATENSCHUTZ ═══ -->
+  <section class="doc" id="datenschutz">
+    <h2>Datenschutzerklärung</h2>
+    <div class="updated">Gültig ab dem Zeitpunkt der Veröffentlichung · nach DSGVO und Schweizer DSG</div>
+
+    <div class="box">
+      <p><strong>Kurz gesagt:</strong> Clevia ist darauf ausgelegt, so wenig Daten wie möglich zu verarbeiten. Die Analyse deiner gescannten Produkte läuft direkt auf deinem Gerät. Wir zeigen keine Werbung und verkaufen keine Daten.</p>
+    </div>
+
+    <h3>1. Verantwortlicher</h3>
+    <p>Verantwortlich für die Datenverarbeitung ist:<br>
+    Fabian Gempel (sooth+), Autschachenpark 4, 8752 Näfels, Schweiz. E-Mail: <a href="mailto:support@sooth.de">support@sooth.de</a></p>
+
+    <h3>2. Welche Daten wir verarbeiten</h3>
+    <p><strong>Auf deinem Gerät (nicht an uns übertragen):</strong> Die Erkennung und Bewertung von Inhaltsstoffen — ob per Foto, Barcode oder Texteingabe — findet lokal auf deinem Gerät statt. Fotos, die du zum Scannen aufnimmst, werden auf dem Gerät verarbeitet und <strong>nicht an unsere Server gesendet</strong>. Deine Scan-Historie und Einstellungen werden lokal gespeichert.</p>
+    <p><strong>Bei Nutzung des KI-Coaches:</strong> Wenn du dem integrierten Coach eine Frage stellst, wird der Text deiner Frage an unseren Dienstleister zur Verarbeitung der Antwort übermittelt. Sende dabei keine Gesundheitsdaten, die dich identifizierbar machen.</p>
+    <p><strong>Bei Kauf eines Abos:</strong> Zur Zahlungsabwicklung werden die notwendigen Daten (z.B. E-Mail-Adresse, Zahlungsstatus) verarbeitet. Die Kreditkartendaten werden ausschließlich von unserem Zahlungsdienstleister verarbeitet — wir speichern keine Kartendaten.</p>
+    <p><strong>Nutzungsstatistik:</strong> Wir nutzen eine datenschutzfreundliche, anonyme Reichweitenmessung ohne Cookies und ohne Erstellung von Nutzerprofilen.</p>
+
+    <h3>3. Rechtsgrundlagen</h3>
+    <p>Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 DSGVO: zur Erfüllung eines Vertrags (lit. b, bei Abo), aufgrund berechtigter Interessen an einem funktionierenden, sicheren Angebot (lit. f) oder auf Basis deiner Einwilligung (lit. a), soweit erforderlich.</p>
+
+    <h3>4. Dienstleister (Auftragsverarbeiter)</h3>
+    <p>Zur Bereitstellung des Dienstes setzen wir sorgfältig ausgewählte Dienstleister ein, u.a.:</p>
+    <ul>
+      <li><strong>Hosting &amp; Datenbank</strong> — Betrieb der Server und Speicherung von Konto-/Abo-Daten</li>
+      <li><strong>Zahlungsabwicklung</strong> — Verarbeitung von Zahlungen und Abonnements</li>
+      <li><strong>KI-Dienst</strong> — Verarbeitung der an den Coach gestellten Fragen</li>
+      <li><strong>E-Mail-Versand</strong> — Versand notwendiger Nachrichten (z.B. Kaufbestätigung)</li>
+    </ul>
+    <p>Mit diesen Dienstleistern bestehen, soweit erforderlich, Verträge zur Auftragsverarbeitung. Bei Übermittlung in Drittländer werden geeignete Garantien (z.B. EU-Standardvertragsklauseln) verwendet.</p>
+
+    <h3>5. Speicherdauer</h3>
+    <p>Lokale Daten (Scan-Historie, Einstellungen) bleiben auf deinem Gerät, bis du sie löschst oder die App entfernst. Konto- und Abrechnungsdaten werden gespeichert, solange dein Konto besteht und gesetzliche Aufbewahrungsfristen dies erfordern.</p>
+
+    <h3>6. Deine Rechte</h3>
+    <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Du kannst eine erteilte Einwilligung jederzeit widerrufen. Wende dich dazu an <a href="mailto:support@sooth.de">support@sooth.de</a>. Zudem steht dir ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu.</p>
+
+    <h3>7. Konto löschen</h3>
+    <p>Du kannst dein Konto und die damit verbundenen Daten jederzeit löschen lassen. Schreibe uns dazu an <a href="mailto:support@sooth.de">support@sooth.de</a> oder nutze die Löschfunktion in der App.</p>
+
+    <p class="muted">Diese Datenschutzerklärung ist eine Vorlage und sollte vor dem Launch an die tatsächlich eingesetzten Dienste angepasst und ggf. rechtlich geprüft werden.</p>
+  </section>
+
+  <!-- ═══ AGB ═══ -->
+  <section class="doc" id="agb">
+    <h2>Nutzungsbedingungen</h2>
+    <div class="updated">Allgemeine Geschäftsbedingungen für die Nutzung der Clevia-App</div>
+
+    <h3>1. Geltungsbereich</h3>
+    <p>Diese Nutzungsbedingungen gelten für die Nutzung der Clevia-App und der zugehörigen Dienste, bereitgestellt von sooth+ (Fabian Gempel), nachfolgend „Anbieter".</p>
+
+    <h3>2. Leistungsbeschreibung</h3>
+    <p>Clevia ist eine Anwendung, die Inhaltsstoffe von Kosmetik, Lebensmitteln, Nahrungsergänzung, Haushaltsprodukten und Textilien einschätzt. Die App liefert eine <strong>Orientierungshilfe</strong> auf Basis öffentlich verfügbarer Informationen und einer eigenen Bewertungslogik.</p>
+
+    <div class="box">
+      <p><strong>Wichtiger Hinweis:</strong> Die Bewertungen von Clevia spiegeln eine vorsorgeorientierte, teils von der behördlichen Einschätzung abweichende Sichtweise wider. Sie stellen <strong>keine</strong> medizinische, ernährungswissenschaftliche oder toxikologische Beratung dar und ersetzen keine fachkundige Beratung. Entscheidungen über Produkte, Ernährung oder Gesundheit triffst du eigenverantwortlich.</p>
+    </div>
+
+    <h3>3. Kostenlose Nutzung &amp; Premium</h3>
+    <p>Die Kosmetik-Kategorie ist dauerhaft kostenlos nutzbar. Weitere Kategorien und Funktionen (u.a. Lebensmittel, Nahrungsergänzung, Haushalt, Kleidung, Coach) sind Teil des kostenpflichtigen Premium-Zugangs. Zu Beginn steht ein kostenloser Testzeitraum von 14 Tagen mit vollem Zugang zur Verfügung.</p>
+
+    <h3>4. Abonnement, Preise &amp; Kündigung</h3>
+    <ul>
+      <li>Premium ist als Monats-, Jahres- oder einmaliges Lifetime-Angebot erhältlich.</li>
+      <li>Die jeweils gültigen Preise werden vor Vertragsschluss angezeigt.</li>
+      <li>Laufende Abonnements sind jederzeit zum Ende des Abrechnungszeitraums kündbar.</li>
+      <li>Die Abwicklung erfolgt über den jeweiligen Zahlungsdienstleister bzw. App-Store.</li>
+    </ul>
+
+    <h3>5. Widerrufsrecht</h3>
+    <p>Verbrauchern steht ein gesetzliches Widerrufsrecht zu. Bei digitalen Inhalten kann dieses erlöschen, wenn die Ausführung mit ausdrücklicher Zustimmung vor Ablauf der Widerrufsfrist begonnen hat. Details werden im Kaufprozess mitgeteilt.</p>
+
+    <h3>6. Pflichten der Nutzer</h3>
+    <p>Du verpflichtest dich, die App nicht missbräuchlich zu nutzen, insbesondere keine Schutzmechanismen zu umgehen und keine automatisierten Massenabfragen durchzuführen.</p>
+
+    <h3>7. Haftung</h3>
+    <p>Der Anbieter haftet unbeschränkt bei Vorsatz und grober Fahrlässigkeit sowie bei Verletzung von Leben, Körper oder Gesundheit. Im Übrigen ist die Haftung auf vertragstypische, vorhersehbare Schäden begrenzt. Für die inhaltliche Richtigkeit der Einschätzungen wird im Rahmen des gesetzlich Zulässigen keine Haftung übernommen.</p>
+
+    <h3>8. Änderungen</h3>
+    <p>Der Anbieter kann diese Bedingungen anpassen, soweit dies zumutbar ist. Über wesentliche Änderungen wird rechtzeitig informiert.</p>
+
+    <h3>9. Anwendbares Recht</h3>
+    <p>Es gilt Schweizer Recht unter Ausschluss des UN-Kaufrechts. Zwingende Verbraucherschutzvorschriften des Wohnsitzstaates des Nutzers bleiben unberührt.</p>
+
+    <p class="muted">Diese Nutzungsbedingungen sind eine Vorlage und sollten vor dem Launch rechtlich geprüft werden.</p>
+  </section>
+</div>
+
+<footer class="footer"><div class="wrap">
+  <p>© 2026 sooth+ · <a href="/">Zurück zur Startseite</a></p>
+</div></footer>
+
+<script>
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    const id=tab.dataset.tab;
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.doc').forEach(d=>d.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+// Direktlink per Hash (#datenschutz etc.)
+const hash=location.hash.replace('#','');
+if(hash && document.getElementById(hash)){
+  document.querySelector(`.tab[data-tab="${hash}"]`)?.click();
+}
+</script>
+</body></html>
